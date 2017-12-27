@@ -7,17 +7,22 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class FilmeService extends AbstractHttpService<Filme>{
 
-  headers: Headers = new Headers({ 'Content-Type': 'application/json' });
-  options = new RequestOptions({headers: this.headers});
+  
 
-  filmes : Filme[] = [];
-
-  constructor(http : Http) {
+  filmes: Filme[] = [];
+  https: Http;
+  constructor(http: Http) {
     super('filmes', http);
+    this.https = http;
   }
 
   getFilmes(): Observable<Filme[]> {
     return this.queryAll();
+  }
+
+  getByTitulo(busca: string): Observable<Filme[]> {
+    return this.https.get(`${this.apiUrl}${this.resource}/${"busca"}/${busca}`, this.getCustomOptions())
+      .map(response => response.json());
   }
 
 }

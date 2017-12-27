@@ -17,21 +17,22 @@ export class TabelaFilmesComponent implements OnInit {
   filmes: Filme[] = [];
   generos: Genero[] = [];
   filme: Filme = new Filme();
-  filmeFiltro: any = new Filme();
+  busca : string = "";
 
 
   constructor(private filmeService: FilmeService, private generoService: GeneroService) {
   }
 
   ngOnInit() {
+    this.carregarGeneros();
+    this.buscarFilmes();
+  }
+
+  carregarGeneros(): void {
     this.filme.genero.id = -1;
     this.generoService.getGeneros().subscribe(generos => {
       this.generos = generos;
     });
-
-    this.buscarFilmes();
-
-
   }
 
   save(): void {
@@ -56,24 +57,31 @@ export class TabelaFilmesComponent implements OnInit {
       });
   }
 
-  limparInputs() : void{
+  limparInputs(): void {
     this.filme = new Filme();
   }
 
-  excluir(idFilme: number) : void {
+  excluir(idFilme: number): void {
     this.filmeService.delete(idFilme).subscribe(
-      ()=>{
+      () => {
         this.buscarFilmes();
       }
     );
   }
 
+  buscarPorTitulo() : void{
+    this.filmeService.getByTitulo(this.busca).subscribe(
+      filmes => {
+        this.filmes = filmes;
+      }
+    );
+  }
 
-  closeModal() : void {
+  closeModal(): void {
     this.limparInputs();
   }
 
-  editar(filme : Filme) : void {
+  editar(filme: Filme): void {
     this.filme.idFilme = filme.idFilme;
     this.filme.duracao = filme.duracao;
     this.filme.genero = filme.genero;

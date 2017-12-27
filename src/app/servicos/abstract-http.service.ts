@@ -7,10 +7,10 @@ import 'rxjs/add/operator/map'
 
 export abstract class AbstractHttpService<T> {
 
-    private apiUrl: string = environment.apiUrl;
+    protected apiUrl: string = environment.apiUrl;
 
     constructor(
-        private resource: string, 
+        protected resource: string, 
         private http: Http) {
     }
 
@@ -53,7 +53,7 @@ export abstract class AbstractHttpService<T> {
         return queryParams;
     }
 
-    private getCustomOptions(): RequestOptions {
+    protected getCustomOptions(): RequestOptions {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
