@@ -17,7 +17,13 @@ export class TabelaFilmesComponent implements OnInit {
   filmes: Filme[] = [];
   generos: Genero[] = [];
   filme: Filme = new Filme();
-  busca : string = "";
+  busca: any;
+  idFilme : number;
+
+  confirmarExclusao(id : number) : void{
+    this.idFilme = id;
+    $("#excluir").modal("show");
+  }
 
 
   constructor(private filmeService: FilmeService, private generoService: GeneroService) {
@@ -61,31 +67,48 @@ export class TabelaFilmesComponent implements OnInit {
     this.filme = new Filme();
   }
 
-  excluir(idFilme: number): void {
-    this.filmeService.delete(idFilme).subscribe(
+  excluir(): void {
+    this.filmeService.delete(this.idFilme).subscribe(
       () => {
         this.buscarFilmes();
+        $("#excluir").modal("hide");
       }
     );
   }
 
-  buscarPorTitulo() : void{
+  buscarPorTitulo(): void {
+    console.log(this.busca);
+    debugger;
+    if(this.busca != undefined && this.busca.trim() == ""){
+      this.busca = undefined;
+    }else if(this.busca != undefined){
+      this.busca = this.busca.trim();
+    }
+    
+    
+    
     this.filmeService.getByTitulo(this.busca).subscribe(
       filmes => {
         this.filmes = filmes;
       }
     );
+
   }
 
   closeModal(): void {
     this.limparInputs();
   }
 
+
+
   editar(filme: Filme): void {
-    this.filme.idFilme = filme.idFilme;
-    this.filme.duracao = filme.duracao;
-    this.filme.genero = filme.genero;
-    this.filme.titulo = filme.titulo;
+   this.filmeService.get(filme.idFilme).subscribe(
+      filme => {
+        this.filme = filme;
+      }
+   );
     $("#myModal").modal("show");
   }
+
+  
 }

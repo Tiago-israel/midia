@@ -11,7 +11,7 @@ export abstract class AbstractHttpService<T> {
 
     constructor(
         protected resource: string, 
-        private http: Http) {
+        protected http: Http) {
     }
 
     public queryAll(queryParams?: any): Observable<T[]> {
@@ -19,10 +19,12 @@ export abstract class AbstractHttpService<T> {
             .map(response => response.json());
     }
 
-    public get(id: string): Observable<T> {
+    public get(id: any): Observable<T> {
         return this.http.get(`${this.apiUrl}${this.resource}/${id}`, this.getCustomOptions())
             .map(response => response.json());
     }
+
+    
 
     public post(requestBody: T): Observable<T> {
         return this.http.post(`${this.apiUrl}${this.resource}`, requestBody, this.getCustomOptions())

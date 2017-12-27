@@ -21,8 +21,8 @@ export class FilmeService extends AbstractHttpService<Filme>{
   }
 
   getByTitulo(busca: string): Observable<Filme[]> {
-    return this.https.get(`${this.apiUrl}${this.resource}/${"busca"}/${busca}`, this.getCustomOptions())
-      .map(response => response.json());
+    console.log(busca);
+    return this.http.get(`${this.apiUrl}${this.resource+"/busca"}/${busca}`, this.getCustomOptions())
+    .map(response => response.json());
   }
-
 }
