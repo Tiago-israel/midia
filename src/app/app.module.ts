@@ -1,3 +1,4 @@
+import { routing } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -9,6 +10,7 @@ import { MenuComponent } from './menu/menu.component';
 import { TabelaFilmesComponent } from './tabela-filmes/tabela-filmes.component';
 import { FilmeService } from './servicos/filme.service';
 import { GeneroService } from './servicos/genero.service';
+import { TabelaGenerosComponent } from './genero/tabela-generos/tabela-generos.component';
 
 
 
@@ -16,10 +18,12 @@ import { GeneroService } from './servicos/genero.service';
   declarations: [
     AppComponent,
     MenuComponent,
-    TabelaFilmesComponent
+    TabelaFilmesComponent,
+    TabelaGenerosComponent
   ],
   imports: [
     BrowserModule,
+    routing,
     HttpModule,
     FormsModule
   ],

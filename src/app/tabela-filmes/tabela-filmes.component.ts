@@ -99,7 +99,8 @@ export class TabelaFilmesComponent implements OnInit {
     this.filme = new Filme();
   }
 
-  closeModal(): void {
+  closeModal(form): void {
+    form.reset();
     this.limparInputs();
   }
 

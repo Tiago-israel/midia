@@ -40,7 +40,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit"  [disabled]="!f.valid || gen.value == -1" class="btn btn-success pull-left">salvar</button>
-          <button type="button" class="btn btn-default" (click)="closeModal()" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-default" (click)="closeModal(f)" data-dismiss="modal">Fechar</button>
         </div>
       </form>
     </div>
