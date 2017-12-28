@@ -4,3 +4,9 @@
 col-custom{
     padding-left: 0px !important;
 }
+
+
+
+.error{
+    color: red;
+}

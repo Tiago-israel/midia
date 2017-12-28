@@ -18,15 +18,10 @@ export class TabelaFilmesComponent implements OnInit {
   generos: Genero[] = [];
   filme: Filme = new Filme();
   busca: any;
-  idFilme : number;
-
-  confirmarExclusao(id : number) : void{
-    this.idFilme = id;
-    $("#excluir").modal("show");
-  }
-
+  idFilme: number;
 
   constructor(private filmeService: FilmeService, private generoService: GeneroService) {
+
   }
 
   ngOnInit() {
@@ -34,12 +29,7 @@ export class TabelaFilmesComponent implements OnInit {
     this.buscarFilmes();
   }
 
-  carregarGeneros(): void {
-    this.filme.genero.id = -1;
-    this.generoService.getGeneros().subscribe(generos => {
-      this.generos = generos;
-    });
-  }
+  //---CRUD---
 
   save(): void {
     this.filmeService.post(this.filme).subscribe(
@@ -52,10 +42,6 @@ export class TabelaFilmesComponent implements OnInit {
 
   }
 
-  hideModal(): void {
-    $("#myModal").modal("hide");
-  }
-
   buscarFilmes(): void {
     this.filmeService.getFilmes()
       .subscribe(filmes => {
@@ -63,9 +49,16 @@ export class TabelaFilmesComponent implements OnInit {
       });
   }
 
-  limparInputs(): void {
-    this.filme = new Filme();
+
+  editar(filme: Filme): void {
+    this.filmeService.get(filme.idFilme).subscribe(
+      filme => {
+        this.filme = filme;
+      }
+    );
+    this.showModal();
   }
+
 
   excluir(): void {
     this.filmeService.delete(this.idFilme).subscribe(
@@ -79,14 +72,14 @@ export class TabelaFilmesComponent implements OnInit {
   buscarPorTitulo(): void {
     console.log(this.busca);
     debugger;
-    if(this.busca != undefined && this.busca.trim() == ""){
+    if (this.busca != undefined && this.busca.trim() == "") {
       this.busca = undefined;
-    }else if(this.busca != undefined){
+    } else if (this.busca != undefined) {
       this.busca = this.busca.trim();
     }
-    
-    
-    
+
+
+
     this.filmeService.getByTitulo(this.busca).subscribe(
       filmes => {
         this.filmes = filmes;
@@ -95,20 +88,45 @@ export class TabelaFilmesComponent implements OnInit {
 
   }
 
+  confirmarExclusao(id: number): void {
+    this.idFilme = id;
+    $("#excluir").modal("show");
+  }
+
+
+  //funcionalidades
+  limparInputs(): void {
+    this.filme = new Filme();
+  }
+
   closeModal(): void {
     this.limparInputs();
   }
 
+  hideModal(): void {
+    $("#myModal").modal("hide");
+  }
 
-
-  editar(filme: Filme): void {
-   this.filmeService.get(filme.idFilme).subscribe(
-      filme => {
-        this.filme = filme;
-      }
-   );
+  showModal(): void {
     $("#myModal").modal("show");
   }
 
-  
+  novo(): void {
+    $(".error").html("");
+    this.carregarGeneros();
+  }
+
+  onSubmit(form): void {
+    this.save();
+  }
+
+  carregarGeneros(): void {
+    this.filme = new Filme();
+    this.filme.genero.id = -1;
+    this.generoService.getGeneros().subscribe(generos => {
+      this.generos = generos;
+    });
+  }
+
+
 }
