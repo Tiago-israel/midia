@@ -32,8 +32,8 @@ export class TabelaGenerosComponent implements OnInit {
 
   save(): void {
     this.generoService.post(this.genero).subscribe(
-      () => {
-        debugger
+      (response) => {
+        console.log(response);
         this.buscarTodos();
       }
     );

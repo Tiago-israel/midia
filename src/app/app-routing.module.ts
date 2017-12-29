@@ -6,6 +6,7 @@ import { TabelaFilmesComponent } from './tabela-filmes/tabela-filmes.component';
 const routes : Routes = [
     {path: '', component: TabelaFilmesComponent },
     {path: 'generos', component: TabelaGenerosComponent },
+    {path: 'filmes', component: TabelaFilmesComponent }
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
