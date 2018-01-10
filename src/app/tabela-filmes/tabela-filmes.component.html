@@ -8,38 +8,38 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">
-          <span *ngIf="filme.idFilme > 0" >Editar- {{filme.titulo}}</span>
-          <span *ngIf="filme.idFilme == null" >Novo</span>
+          <span *ngIf="filme.idFilme > 0">Editar- {{filme.titulo}}</span>
+          <span *ngIf="filme.idFilme == null">Novo</span>
         </h4>
       </div>
       <form #f="ngForm" (ngSubmit)="onSubmit(f)" id="myForm">
         <div class="modal-body">
           <div class="form-group">
-            <input type="hidden"  name="idFilme" [(ngModel)]="filme.idFilme" />
+            <input type="hidden" name="idFilme" [(ngModel)]="filme.idFilme" />
           </div>
           <div class="form-group">
             <label>Título</label>
-            <input type="text" #titulo="ngModel"  required name="titulo" class="form-control" [(ngModel)]="filme.titulo"/>
-            <span class="error" *ngIf="!titulo.valid && titulo.touched" >o campo Título é obrigatório</span>
+            <input type="text" #titulo="ngModel" required name="titulo" class="form-control" [(ngModel)]="filme.titulo" />
+            <span class="error" *ngIf="!titulo.valid && titulo.touched">o campo Título é obrigatório</span>
           </div>
           <div class="form-group">
             <label>Duração</label>
             <input type="number" #duracao="ngModel" required name="duracao" class="form-control" [(ngModel)]="filme.duracao" />
-            <span class="error" *ngIf="!duracao.valid && duracao.touched" >o campo Duração é obrigatório</span>
+            <span class="error" *ngIf="!duracao.valid && duracao.touched">o campo Duração é obrigatório</span>
           </div>
           <div class="form-group">
             <label>Gênero</label>
-            <select required #gen ="ngModel" class="form-control" name="id" [(ngModel)]="filme.genero.id">
+            <select required #gen="ngModel" class="form-control" name="id" [(ngModel)]="filme.genero.id">
               <option [value]="-1">Selecione</option>
               <option *ngFor="let genero of generos" [value]="genero.id">
                 {{genero.nome}}
               </option>
             </select>
-            <span class="error" *ngIf="gen.touched && gen.value == -1" >Selecione um gênero</span>
+            <span class="error" *ngIf="gen.touched && gen.value == -1">Selecione um gênero</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit"  [disabled]="!f.valid || gen.value == -1" class="btn btn-success pull-left">salvar</button>
+          <button type="submit" [disabled]="!f.valid || gen.value == -1" class="btn btn-success pull-left">salvar</button>
           <button type="button" class="btn btn-default" (click)="closeModal(f)" data-dismiss="modal">Fechar</button>
         </div>
       </form>
@@ -65,33 +65,24 @@
 </div>
 <div class="row">
   <div class="col-md-10 col-md-offset-1 col-sm-12">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover ">
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Gênero</th>
-            <th>Duração</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let filme of filmes">
-            <td>{{filme.titulo}}</td>
-            <td>{{filme.genero.nome}}</td>
-            <td>{{filme.duracao}} min.</td>
-            <td class="text-center">
-              <button class="btn btn-danger" (click)="confirmarExclusao(filme.idFilme)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-warning" data-toggle="modal" (click)="editar(filme)">
-                <i class="fa fa-edit"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p-dataTable [value]="filmes" defaultLabel="Escolha" displaySelectedLabel=true>
+      <p-header>
+        <div style="text-align:left">
+          <p-multiSelect [options]="columnOptions" [(ngModel)]="colunas"></p-multiSelect>
+        </div>
+      </p-header>
+      <p-column *ngFor="let col of colunas" styleClass="center-text"  [field]="col.field" [header]="col.header"></p-column>
+      <p-column header="Ações">
+        <ng-template let-filme="rowData" pTemplate="body" style="text-align: center">
+          <button class="btn btn-danger" (click)="confirmarExclusao(filme.idFilme)">
+            <i  class="fa fa-trash"></i>
+          </button>
+          <button class="btn btn-warning" data-toggle="modal" (click)="editar(filme)">
+            <i   class="fa fa-edit"></i>
+          </button>
+        </ng-template>
+      </p-column>
+    </p-dataTable>
   </div>
 </div>
 

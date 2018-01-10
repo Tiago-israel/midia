@@ -3,6 +3,7 @@ import { FilmeService } from './../servicos/filme.service';
 import { Filme } from './../dto/Filme';
 import { Genero } from './../dto/Genero';
 import { Component, OnInit } from '@angular/core';
+import { SelectItem } from 'primeng/components/common/selectitem';
 
 declare var $: any;
 
@@ -19,7 +20,9 @@ export class TabelaFilmesComponent implements OnInit {
   filme: Filme = new Filme();
   busca: any;
   idFilme: number;
-
+  cols: any[];
+  colunas:any[];
+  columnOptions: SelectItem[];
   constructor(private filmeService: FilmeService, private generoService: GeneroService) {
 
   }
@@ -27,7 +30,24 @@ export class TabelaFilmesComponent implements OnInit {
   ngOnInit() {
     this.carregarGeneros();
     this.buscarFilmes();
+    this.cols = [
+      { field: 'idFilme', header: 'Id' },
+      { field: 'titulo', header: 'TÍtulo' },
+      { field: 'duracao', header: 'Duração' },
+      { field: 'genero.nome', header: 'Gênero' }
+    ];
+    this.colunas = [
+      { field: 'idFilme', header: 'Id' },
+      { field: 'genero.nome', header: 'Gênero' }
+    ];
+    this.columnOptions = [];
+    for(let i = 0; i < this.cols.length; i++) {
+        this.columnOptions.push({label: this.cols[i].header, value: this.cols[i]});
+    }
   }
+
+  
+
 
   //---CRUD---
 
@@ -129,5 +149,6 @@ export class TabelaFilmesComponent implements OnInit {
     });
   }
 
+  
 
 }

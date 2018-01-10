@@ -10,3 +10,7 @@ col-custom{
 .error{
     color: red;
 }
+
+.center-text{
+    text-align: center !important;
+}

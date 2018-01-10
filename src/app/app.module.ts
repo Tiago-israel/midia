@@ -11,7 +11,7 @@ import { TabelaFilmesComponent } from './tabela-filmes/tabela-filmes.component';
 import { FilmeService } from './servicos/filme.service';
 import { GeneroService } from './servicos/genero.service';
 import { TabelaGenerosComponent } from './genero/tabela-generos/tabela-generos.component';
-
+import {DataTableModule,SharedModule, MultiSelectModule} from 'primeng/primeng';
 
 
 @NgModule({
@@ -19,13 +19,16 @@ import { TabelaGenerosComponent } from './genero/tabela-generos/tabela-generos.c
     AppComponent,
     MenuComponent,
     TabelaFilmesComponent,
-    TabelaGenerosComponent
+    TabelaGenerosComponent,
+
   ],
   imports: [
     BrowserModule,
     routing,
     HttpModule,
-    FormsModule
+    FormsModule,
+    DataTableModule,
+    MultiSelectModule
   ],
   providers: [
     FilmeService,
